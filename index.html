@@ -60,8 +60,8 @@
     <div class="capture">
       <h2>Send me the planner</h2>
       <p class="promise">One email, the planner attached, no spam parade. Unsubscribe any time.</p>
-      <form method="POST" action="#SYSTEME_FORM_ACTION#">
-        <!-- #SYSTEME_HIDDEN_FIELDS# -->
+      <form method="POST" action="#">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-5000px" aria-hidden="true">
         <input type="email" name="email" required autocomplete="email" placeholder="your@email.com" aria-label="Your email address">
         <button class="cta" type="submit">Get the free planner</button>
       </form>
@@ -118,17 +118,28 @@
 
 <script>
 (() => {
+  const ENDPOINT = "#GAS_ENDPOINT#";
   const form = document.querySelector('form');
-  if (form && form.getAttribute('action').indexOf('#SYSTEME') === 0) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = form.querySelector('input[type=email]').value.trim();
+    if (!email) return;
+    const btn = form.querySelector('button');
+    if (ENDPOINT.indexOf('#') === 0) {
       const note = document.createElement('p');
-      note.className = 'fineprint';
+      note.className = 'fineprint not-yet';
       note.style.color = 'var(--terracotta)';
       note.textContent = 'The planner list opens in the next day or two -- the boards are live on Pinterest meanwhile.';
-      if (!form.parentElement.querySelector('.not-yet')) { note.classList.add('not-yet'); form.parentElement.appendChild(note); }
-    });
-  }
+      if (!form.parentElement.querySelector('.not-yet')) form.parentElement.appendChild(note);
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Sending...';
+    const data = new FormData(form);
+    data.append('source', 'thesunnyroom.co');
+    fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body: data })
+      .finally(() => { window.location.href = 'thanks.html'; });
+  });
 })();
 </script>
 </body>
