@@ -1,0 +1,17 @@
+{
+  "note": "Keys the vault's site-copy.md may carry. apply-copy.mjs replaces the inner text of every element marked data-copy=\"<key>\" in index.html. 'wrap' dresses one word in a span after escaping.",
+  "keys": [
+    "eyebrow", "headline", "sub",
+    "capture-title", "promise", "cta", "fineprint",
+    "amt-1", "amt-2", "amt-3", "receipts-cap",
+    "inside-title",
+    "tile-1-title", "tile-1-body",
+    "tile-2-title", "tile-2-body",
+    "tile-3-title", "tile-3-body",
+    "tile-4-title", "tile-4-body",
+    "story-title", "story-p1", "story-p2", "signature"
+  ],
+  "wrap": {
+    "headline": { "word": "Sunny", "class": "sunny-word" }
+  }
+}
